@@ -1,8 +1,10 @@
 # Prismal Player
 
+<img src="https://raw.githubusercontent.com/technicalnihilist-lgtm/prismal-player/main/docs/icon.png" width="88" align="right" alt="Prismal Player icon">
+
 **A glassy, gesture-driven video player for your phone — one HTML file, wrapped as a real Android app.**
 
-![Android 7.0+](https://img.shields.io/badge/Android-7.0%2B-3DDC84?logo=android&logoColor=white)
+![Android 7.0+](https://img.shields.io/badge/Android-7.0%2B-3DDC84
 ![Version 1.0](https://img.shields.io/badge/version-1.0-3a6cff)
 ![APK 134 KB](https://img.shields.io/badge/APK-134%20KB-ff4fa3)
 ![No dependencies](https://img.shields.io/badge/dependencies-none-18c5a8)
@@ -13,12 +15,12 @@ Prismal Player started life as a single self-contained `Prismal_Player.html` —
 
 <table>
 <tr>
-<td align="center"><img src="https://github.com/technicalnihilist-lgtm/prismal-player/releases/download/v1.0.0/home.jpg" width="230"><br><sub><b>Home</b></sub></td>
-<td align="center"><img src="https://github.com/technicalnihilist-lgtm/prismal-player/releases/download/v1.0.0/library.jpg" width="230"><br><sub><b>Playlist &amp; menu</b></sub></td>
+<td align="center"><img src="https://raw.githubusercontent.com/technicalnihilist-lgtm/prismal-player/main/docs/home.jpg" width="230"><br><sub><b>Home</b></sub></td>
+<td align="center"><img src="https://raw.githubusercontent.com/technicalnihilist-lgtm/prismal-player/main/docs/library.jpg" width="230"><br><sub><b>Playlist &amp; menu</b></sub></td>
 </tr>
 <tr>
-<td align="center"><img src="https://github.com/technicalnihilist-lgtm/prismal-player/releases/download/v1.0.0/player.jpg" width="230"><br><sub><b>Playing</b></sub></td>
-<td align="center"><img src="https://github.com/technicalnihilist-lgtm/prismal-player/releases/download/v1.0.0/settings.jpg" width="230"><br><sub><b>Glass settings</b></sub></td>
+<td align="center"><img src="https://raw.githubusercontent.com/technicalnihilist-lgtm/prismal-player/main/docs/player.jpg" width="230"><br><sub><b>Playing</b></sub></td>
+<td align="center"><img src="https://raw.githubusercontent.com/technicalnihilist-lgtm/prismal-player/main/docs/settings.jpg" width="230"><br><sub><b>Glass settings</b></sub></td>
 </tr>
 </table>
 
