@@ -1,0 +1,98 @@
+# Prismal Player
+
+**A glassy, gesture-driven video player for your phone — one HTML file, wrapped as a real Android app.**
+
+![Android 7.0+](https://img.shields.io/badge/Android-7.0%2B-3DDC84?logo=android&logoColor=white)
+![Version 1.0](https://img.shields.io/badge/version-1.0-3a6cff)
+![APK 134 KB](https://img.shields.io/badge/APK-134%20KB-ff4fa3)
+![No dependencies](https://img.shields.io/badge/dependencies-none-18c5a8)
+
+Prismal Player started life as a single self-contained `Prismal_Player.html` — no frameworks, no build step, no network calls. This repo holds that file wrapped in a thin native Android shell, plus the signed APK you can actually install.
+
+<table>
+<tr>
+<td align="center"><img src="https://github.com/technicalnihilist-lgtm/prismal-player/releases/download/v1.0.0/home.jpg" width="230"><br><sub><b>Home</b></sub></td>
+<td align="center"><img src="https://github.com/technicalnihilist-lgtm/prismal-player/releases/download/v1.0.0/library.jpg" width="230"><br><sub><b>Playlist &amp; menu</b></sub></td>
+</tr>
+<tr>
+<td align="center"><img src="https://github.com/technicalnihilist-lgtm/prismal-player/releases/download/v1.0.0/player.jpg" width="230"><br><sub><b>Playing</b></sub></td>
+<td align="center"><img src="https://github.com/technicalnihilist-lgtm/prismal-player/releases/download/v1.0.0/settings.jpg" width="230"><br><sub><b>Glass settings</b></sub></td>
+</tr>
+</table>
+
+## Install
+
+1. Grab **`Prismal_Player.apk`** from the [latest release](../../releases/latest).
+2. Copy it to the phone, tap it, and allow installs from that app once when Android asks.
+3. Open **Prismal Player** → *Open videos* to load files from your phone, or *Paste a link* for a URL.
+
+```bash
+adb install -r Prismal_Player.apk
+```
+
+> The APK is signed with a self-signed key, so Play Protect may ask you to confirm the install. That is expected for sideloaded apps.
+
+## What it does
+
+- **Local or streaming playback** — pick videos from device storage or paste a direct video URL
+- **Gesture controls** — drag vertically for volume (right half) or brightness (left half), drag sideways to scrub, double-tap to skip, tap to toggle controls
+- **Glass UI** — frosted panels with adjustable blur, tint, radius, specular highlight and shadow
+- **Picture tools** — fit modes, rotation, mirror, brightness / contrast / saturation, animated ambient glow sampled from the video
+- **Audio** — volume, mute, and gain boost up to 300% for local files
+- **Subtitles** — load `.srt` / `.vtt`, adjust size, delay and height
+- **Playback** — speed, A–B loop, skip interval, sleep timer, resume where you left off, playlist with reorder-free queue
+- **Feels native** — immersive edge-to-edge layout, notch-aware safe areas, hardware back, media notification controls, optional screen wake lock
+
+## The Android wrapper
+
+The app is a fullscreen, hardware-accelerated `WebView` — the HTML *is* the app. Everything native is in one file, [`MainActivity.java`](app/src/main/java/com/prismal/player/MainActivity.java):
+
+| Piece | Why |
+|---|---|
+| Virtual `https://prismal.local/` origin | Serving assets from `file://` makes modern Chromium refuse `localStorage`; a real origin keeps saved settings working |
+| `onShowFileChooser` bridge | Connects the page's hidden `<input type="file">` to the Android document picker, multi-select included |
+| Immersive + `LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES` | True fullscreen, and the page's `env(safe-area-inset-*)` CSS gets real values |
+| `FLAG_KEEP_SCREEN_ON`, `configChanges` | Screen stays on while playing; rotating does not reload the player |
+| External link handler | http(s) links open in your browser instead of trapping you inside the app |
+
+| | |
+|---|---|
+| Package | `com.prismal.player` |
+| Version | 1.0 (versionCode 1) |
+| Min / target SDK | 24 (Android 7.0) / 34 (Android 14) |
+| APK size | 134 KB |
+| Signing | APK Signature Scheme v2 + v3 |
+
+APK SHA-256: `938a4acd3e07553f5457f992cf88e1f5e882106be7205b539512f9edb7c11bd3`
+
+## Build it yourself
+
+Open `app/` in Android Studio (AGP 8.5, JDK 17) and press **Run**, or build from the command line with the Android SDK build-tools — no Gradle required:
+
+```bash
+bash build.sh   # aapt2 → javac → d8 → zipalign → apksigner
+```
+
+## Repo layout
+
+```
+app/
+├── src/main/AndroidManifest.xml
+├── src/main/java/com/prismal/player/MainActivity.java   # the whole native side
+├── src/main/assets/index.html                            # the player (entire UI)
+├── src/main/res/                                         # adaptive icon, theme, strings
+├── build.gradle
+└── build.sh                                              # SDK-only build, no Gradle
+```
+
+Want to change how the app looks or behaves? Edit `index.html` — the CSS and JS live there in full. Nothing in the Java layer needs touching unless you change the icon, name or package id.
+
+## Notes
+
+- Rebuilds must be signed with the same key as an installed copy, or Android refuses the update. Keep your keystore safe; it is deliberately **not** in this repo.
+- Screenshots are captured from the actual app UI at a 390 × 844 viewport.
+- The demo clip used in the screenshots is generated locally and is not part of the APK.
+
+---
+
+Built with [Sarvam AI](https://sarvam.ai) — one HTML file in, one installable APK out.
